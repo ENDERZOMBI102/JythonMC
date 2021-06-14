@@ -1,12 +1,17 @@
 plugins {
+	id 'com.github.johnrengelman.shadow' version '7.0.0'
 	id 'fabric-loom' version '0.9-SNAPSHOT'
 	id 'maven-publish'
-	id 'java-library'
+	id 'java'
 }
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+configurations {
+	shade
+}
 
 repositories {
 	maven {
@@ -27,8 +32,13 @@ dependencies {
 		transitive(false)
 	}
 
-	api "org.python:jython$jython_version"
+	shade implementation("org.python:jython:$jython_version")
+}
 
+shadowJar {
+	configurations = [project.configurations.shade]
+	from sourceSets.main.allSource
+	classifier ''
 }
 
 processResources {
