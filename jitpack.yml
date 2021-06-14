@@ -1,3 +1,4 @@
 before_install:
+   - curl -s "https://get.sdkman.io" | bash
    - sdk install java 16.0.1.hs-adpt
    - sdk use java 16.0.1.hs-adpt
