@@ -26,7 +26,7 @@ dependencies {
 		transitive(false)
 	}
 
-	api "org.python:jython:$jython_version"
+	implementation "org.python:jython:$jython_version"
 
 }
 
@@ -75,12 +75,14 @@ publishing {
 	}
 
 	// publish to
-	maven {
+	repositories {
 		mavenLocal()
-//		credentials {
-//			username System.getenv('repo_username')
-//			password System.getenv('repo_password')
-//		}
-//		url = 'https://repo.repsy.io/mvn/enderzombi102/mc/'
+		maven {
+//			credentials {
+//				username System.getenv('repo_username')
+//				password System.getenv('repo_password')
+//			}
+//			url = 'https://repo.repsy.io/mvn/enderzombi102/mc/'
+		}
 	}
 }
