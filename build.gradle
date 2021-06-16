@@ -55,6 +55,7 @@ tasks.withType(JavaCompile) {
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
 // If you remove this task, sources will not be generated.
 task sourcesJar(type: Jar, dependsOn: classes) {
+	//noinspection GrDeprecatedAPIUsage
 	classifier = 'sources'
 	from sourceSets.main.allSource
 }
@@ -66,12 +67,17 @@ jar {
 // configure the maven publication
 publishing {
 	publications {
+		//noinspection GroovyAssignabilityCheck
 		mavenJava(MavenPublication) { publication ->
 			// add all the jars that should be included when publishing to maven
+			//noinspection GroovyAssignabilityCheck
 			artifact(remapJar) {
+				//noinspection GroovyAssignabilityCheck
 				builtBy remapJar
 			}
+			//noinspection GroovyAssignabilityCheck
 			artifact(sourcesJar) {
+				//noinspection GroovyAssignabilityCheck
 				builtBy remapSourcesJar
 			}
 			//project.shadow.component(publication)
