@@ -1,5 +1,4 @@
 plugins {
-	id 'com.github.johnrengelman.shadow' version '7.0.0'
 	id 'fabric-loom' version '0.9-SNAPSHOT'
 	id 'maven-publish'
 	id 'java'
@@ -30,11 +29,6 @@ dependencies {
 
 	implementation("org.python:jython:$jython_version")
 }
-
-//shadowJar {
-//	from sourceSets.main.allSource
-//	classifier ''
-//}
 
 processResources {
 	inputs.property 'version', project.version
@@ -80,7 +74,6 @@ publishing {
 				//noinspection GroovyAssignabilityCheck
 				builtBy remapSourcesJar
 			}
-			//project.shadow.component(publication)
 			pom.withXml {
 				def depsNode  = asNode().appendNode('dependencies')
 
@@ -95,13 +88,12 @@ publishing {
 
 	// publish to
 	repositories {
-		mavenLocal()
-//		maven {
-//			credentials {
-//				username System.getenv('repo_username')
-//				password System.getenv('repo_password')
-//			}
-//			url = 'https://repo.repsy.io/mvn/enderzombi102/mc/'
-//		}
+		maven {
+			credentials {
+				username System.getenv('repo_username')
+				password System.getenv('repo_password')
+			}
+			url = 'https://repo.repsy.io/mvn/enderzombi102/mc/'
+		}
 	}
 }

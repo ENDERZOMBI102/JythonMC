@@ -1,14 +1,19 @@
 {
 	"schemaVersion": 1,
-	"id": "jython",
+	"id": "jythonmc",
 	"version": "${version}",
-	"name": "Jython",
+	"name": "JythonMC",
 	"description": "A Jython 'fork' to be used within minecraft mods ",
 	"authors": [ "ENDERZOMBI102" ],
 	"contact": {},
 	"license": "MIT",
 	"icon": "assets/jython/icon.png",
 	"environment": "*",
+	"entrypoints": {
+		"preLaunch": [
+			"com.enderzombi102.jython.Entrypoints"
+		]
+	},
 	"depends": {
 		"fabricloader": ">=0.11.6",
 		"minecraft": "1.*"

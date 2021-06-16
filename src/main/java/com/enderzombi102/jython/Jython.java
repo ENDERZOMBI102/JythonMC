@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public final class Jython {
 
-	private static final Logger LOGGER = LogManager.getLogger("Jython");
+	static final Logger LOGGER = LogManager.getLogger("JythonMC");
 	private static boolean hasBeenInitialized = false;
 
 	/**
@@ -29,7 +29,7 @@ public final class Jython {
 		if ( hasBeenInitialized ) return;
 		new Thread( () -> {
 			try {
-				LOGGER.info("[Jython] Initializing system...");
+				LOGGER.info("[JythonMC] Initializing system...");
 				Properties preProperties = System.getProperties();
 				Properties postProperties = new Properties();
 				preProperties.put("python.home", FabricLoader.getInstance().getGameDir().toString());
@@ -43,9 +43,9 @@ public final class Jython {
 						new String[]{ "" }
 				);
 				hasBeenInitialized = true;
-				LOGGER.info("[Jython] System initialized!");
+				LOGGER.info("[JythonMC] System initialized!");
 			} catch (Exception e) {
-				LOGGER.error("[Jython] An error occured while initializing system: ", e);
+				LOGGER.error("[JythonMC] An error occured while initializing system: ", e);
 			}
 		}).start();
 	}
