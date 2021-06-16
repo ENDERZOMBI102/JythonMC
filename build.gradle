@@ -9,10 +9,6 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-configurations {
-	shade
-}
-
 repositories {
 	maven {
 		url "https://maven.terraformersmc.com/releases/"
@@ -32,14 +28,13 @@ dependencies {
 		transitive(false)
 	}
 
-	shade implementation("org.python:jython:$jython_version")
+	implementation("org.python:jython:$jython_version")
 }
 
-shadowJar {
-	configurations = [project.configurations.shade]
-	from sourceSets.main.allSource
-	classifier ''
-}
+//shadowJar {
+//	from sourceSets.main.allSource
+//	classifier ''
+//}
 
 processResources {
 	inputs.property 'version', project.version
@@ -71,7 +66,7 @@ jar {
 // configure the maven publication
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
+		mavenJava(MavenPublication) { publication ->
 			// add all the jars that should be included when publishing to maven
 			artifact(remapJar) {
 				builtBy remapJar
@@ -79,18 +74,28 @@ publishing {
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
+			//project.shadow.component(publication)
+			pom.withXml {
+				def depsNode  = asNode().appendNode('dependencies')
+
+				def depNode  = depsNode.appendNode('dependency')
+				depNode.appendNode('groupId', 'org.python')
+				depNode.appendNode('artifactId', 'jython')
+				depNode.appendNode('version', jython_version)
+				depNode.appendNode('scope', 'runtime')
+			}
 		}
 	}
 
 	// publish to
 	repositories {
 		mavenLocal()
-		maven {
+//		maven {
 //			credentials {
 //				username System.getenv('repo_username')
 //				password System.getenv('repo_password')
 //			}
 //			url = 'https://repo.repsy.io/mvn/enderzombi102/mc/'
-		}
+//		}
 	}
 }
