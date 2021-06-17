@@ -1,5 +1,7 @@
+_DISCLAIMER! THIS LIBRARY DOES NOT LET YOU CREATE MODS IN PYTHON!_
+
 # JythonMC
-A package containing Jython for use within minecraft mods
+A library containing Jython for use within minecraft mods.
 
 # Use
 There's two methods to initialize the python system:
