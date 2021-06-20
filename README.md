@@ -41,5 +41,5 @@ dependencies {
 ```
 gradle.properties
 ```properties
-jythonmc_version=1.0.0
+jythonmc_version=1.0.1
 ```
