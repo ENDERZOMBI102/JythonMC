@@ -1,4 +1,4 @@
-import com.enderzombi102.jython.Jython;
+import com.enderzombi102.jythonmc.Jython;
 
 public class TestPython {
 

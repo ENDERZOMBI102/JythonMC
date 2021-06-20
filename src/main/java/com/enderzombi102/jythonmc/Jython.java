@@ -1,4 +1,4 @@
-package com.enderzombi102.jython;
+package com.enderzombi102.jythonmc;
 
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
@@ -7,9 +7,10 @@ import org.python.core.PySystemState;
 
 import java.util.Properties;
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public final class Jython {
 
-	static final Logger LOGGER = LogManager.getLogger("JythonMC");
+	static final Logger LOGGER = LogManager.getLogger("jythonmc");
 	private static boolean hasBeenInitialized = false;
 
 	/**
@@ -35,7 +36,7 @@ public final class Jython {
 				preProperties.put("python.home", FabricLoader.getInstance().getGameDir().toString());
 				preProperties.put(
 						"python.path",
-						FabricLoader.getInstance().getModContainer("jython").get().getRootPath().toString() + "\\StdLib"
+						FabricLoader.getInstance().getModContainer("jythonmc").get().getRootPath().toString() + "\\StdLib"
 				);
 				PySystemState.initialize(
 						preProperties,

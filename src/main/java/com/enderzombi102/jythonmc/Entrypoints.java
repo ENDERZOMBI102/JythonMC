@@ -1,10 +1,10 @@
-package com.enderzombi102.jython;
+package com.enderzombi102.jythonmc;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import net.fabricmc.loader.api.metadata.CustomValue;
 
-import static com.enderzombi102.jython.Jython.LOGGER;
+import static com.enderzombi102.jythonmc.Jython.LOGGER;
 
 public class Entrypoints implements PreLaunchEntrypoint {
 	@Override
