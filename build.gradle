@@ -1,12 +1,19 @@
 plugins {
+	id 'com.github.johnrengelman.shadow' version '7.1.0'
 	id 'fabric-loom' version '0.9-SNAPSHOT'
 	id 'maven-publish'
 	id 'java'
 }
 
+import net.fabricmc.loom.task.RemapJarTask
+
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+configurations {
+	shade
+}
 
 repositories {
 	maven {
@@ -27,13 +34,27 @@ dependencies {
 		transitive(false)
 	}
 
-	implementation("org.python:jython:$jython_version")
+	shade implementation("org.python:jython:$jython_version")
 }
+
+shadowJar {
+	dependsOn jar
+	configurations = [project.configurations.shade]
+	archiveClassifier.set('dev')
+}
+remapJar.dependsOn(shadowJar)
+
+task shadowRemapJar(type: RemapJarTask) {
+	dependsOn shadowJar
+
+	input.set(file("${project.buildDir}/libs/$archivesBaseName-${project.version}-dev.jar"))
+	archiveFileName = "${archivesBaseName}-${project.version}.jar"
+	addNestedDependencies.set(true)
+}
+build.dependsOn(shadowRemapJar)
 
 processResources {
 	inputs.property 'version', project.version
-
-	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
 	filesMatching("fabric.mod.json") {
 		expand "version": project.version
@@ -55,7 +76,9 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 jar {
-	from 'LICENSE'
+	from('LICENSE') {
+		rename {"${it}_${project.archivesBaseName}"}
+	}
 }
 
 // configure the maven publication
@@ -74,15 +97,15 @@ publishing {
 				//noinspection GroovyAssignabilityCheck
 				builtBy remapSourcesJar
 			}
-			pom.withXml {
-				def depsNode  = asNode().appendNode('dependencies')
-
-				def depNode  = depsNode.appendNode('dependency')
-				depNode.appendNode('groupId', 'org.python')
-				depNode.appendNode('artifactId', 'jython')
-				depNode.appendNode('version', jython_version)
-				depNode.appendNode('scope', 'runtime')
-			}
+//			pom.withXml {
+//				def depsNode  = asNode().appendNode('dependencies')
+//
+//				def depNode  = depsNode.appendNode('dependency')
+//				depNode.appendNode('groupId', 'org.python')
+//				depNode.appendNode('artifactId', 'jython')
+//				depNode.appendNode('version', jython_version)
+//				depNode.appendNode('scope', 'runtime')
+//			}
 		}
 	}
 
