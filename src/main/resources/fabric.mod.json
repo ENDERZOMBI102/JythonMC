@@ -16,7 +16,6 @@
 	},
 	"depends": {
 		"fabricloader": ">=0.11.6",
-		"minecraft": ">=1.16"
 	},
 	"custom": {
 		"modmenu:api": true
